@@ -1,0 +1,43 @@
+<input type="text" class="form-control" placeholder="Mã..." [(ngModel)]="nv_2_add.code" >
+<input type="text" class="form-control" placeholder="Tên..." [(ngModel)]="nv_2_add.name" >
+<input type="email" class="form-control" placeholder="Email..." [(ngModel)]="nv_2_add.email">
+<input type="text" class="form-control" placeholder="ID..." [(ngModel)]="nv_2_add.id">
+<button (click)="add()">Tạo mới nhân viên</button>
+
+<input type="search" class="form-control" placeholder="Tìm kiếm nhanh..." (keyup)="search($event)">
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr class="row">
+                <td class="col">Mã</td>
+                <td class="col">Tên</td>
+                <td class="col">EMAIL</td>
+                <td class="col">ID</td>
+                <td class="col">HÀNH ĐỘNG</td>
+            </tr>
+        </thead>
+        <tbody *ngFor="let nv of dataSearch; let i = index">
+            <tr *ngIf="!edit_clicked" class="row">
+                <td class="col">{{nv.code}}</td>
+                <td class="col">{{nv.name}}</td>
+                <td class="col">{{nv.email}}</td>
+                <td class="col">{{nv.id}}</td>
+                <td class="col">
+                    <button (click)="edit(i)">Sửa</button>
+                    <button>Xoá</button>
+                </td>
+            </tr>
+            <tr *ngIf="edit_clicked" class="row">
+                <td class="col"><input type="text" value={{nv_temp.code}} [(ngModel)]="nv_temp.code"></td>
+                <td class="col"><input type="text" value={{nv_temp.name}} [(ngModel)]="nv_temp.name"></td>
+                <td class="col"><input type="text" value={{nv_temp.email}} [(ngModel)]="nv_temp.email"></td>
+                <td class="col"><input type="text" value={{nv_temp.id}} [(ngModel)]="nv_temp.id"></td>
+                <td class="col">
+                    <button (click)="reInit()">Lưu</button>
+                    <button (click)="cancel_edit(nv_temp)">Huỷ</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

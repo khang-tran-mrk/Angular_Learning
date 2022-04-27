@@ -1,0 +1,102 @@
+<form [formGroup]="nv_temp" (ngSubmit)="submit()">
+    <input type="text" class="form-control" placeholder="Mã..." formControlName="code">
+    <input id=name type="text" class="form-control" placeholder="Tên..." formControlName="name">
+    <div *ngIf="isValid(nv_temp, 'name') " class="text-danger">
+        <div *ngIf="isValid(nv_temp, 'name', 'required')">Name is required</div>
+        <div *ngIf="isValid(nv_temp, 'name', 'minlength') || isValid(nv_temp, 'name', 'maxlength')">Name must be
+            greater than 6
+            characters and less than 30 characters</div>
+        <div *ngIf="isValid(nv_temp, 'name', 'pattern')">Name do not include special characters</div>
+    </div>
+    <input type="text" class="form-control" placeholder="SDT..." formControlName="phone">
+    <div *ngIf="isValid(nv_temp, 'phone') " class="text-danger">
+        <div *ngIf="submitted && isValid(nv_temp, 'phone', 'required')">Phone is required</div>
+        <div *ngIf="isValid(nv_temp, 'phone', 'minlength') || isValid(nv_temp, 'phone', 'maxlength')">Phone can not
+            less
+            than 10 or greater than 10</div>
+        <div *ngIf="isValid(nv_temp, 'phone', 'pattern')">Phone must start with 0 and number only</div>
+    </div>
+    <input type="text" class="form-control" placeholder="ID..." formControlName="id">
+    <div *ngIf="isValid(nv_temp, 'id') " class="text-danger">
+        <div *ngIf="isValid(nv_temp, 'id', 'required')">ID is required</div>
+        <div *ngIf="isValid(nv_temp, 'id', 'pattern')">ID must be 9 or 12 characters</div>
+    </div>
+    <input type="submit" [disabled]="!nv_temp.valid" class="btn form-control" />
+</form>
+
+
+
+<input type="search" class="form-control" placeholder="Tìm kiếm nhanh..." (keyup)="search($event)">
+
+
+<div class="container">
+    <form [formGroup]="nv_temp" (ngSubmit)="save_edit()">
+        <table class="table">
+            <thead>
+                <tr class="row">
+                    <td class="col">Mã</td>
+                    <td class="col">Tên</td>
+                    <td class="col">SDT</td>
+                    <td class="col">ID</td>
+                    <td class="col">HÀNH ĐỘNG</td>
+                </tr>
+            </thead>
+            <tbody *ngIf="!edit_clicked">
+                <tr *ngFor="let nv of dataSearch; let i = index" class="row">
+                    <td class="col">{{nv.code}}</td>
+                    <td class="col">{{nv.name}}</td>
+                    <td class="col">{{nv.phone}}</td>
+                    <td class="col">{{nv.id}}</td>
+                    <td class="col">
+                        <button (click)="edit(i)">Sửa</button>
+                        <button (click)="del(i)">Xoá</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="edit_clicked">
+                <tr class="row">
+
+                    <td class="col">
+                        <input type="text" formControlName="code" />
+
+                    </td>
+                    <td class="col"><input type="text" formControlName="name" />
+                        <div *ngIf="isValid(nv_temp, 'name') " class="text-danger">
+                            <div *ngIf="isValid(nv_temp, 'name', 'required')">Name is required</div>
+                            <div *ngIf="isValid(nv_temp, 'name', 'minlength') || isValid(nv_temp, 'name', 'maxlength')">
+                                Name must be
+                                greater than 6
+                                characters and less than 30 characters</div>
+                            <div *ngIf="isValid(nv_temp, 'name', 'pattern')">Name do not include special characters
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col"><input type="text" formControlName="phone">
+                        <div *ngIf="isValid(nv_temp, 'phone') " class="text-danger">
+                            <div *ngIf="isValid(nv_temp, 'phone', 'required')">Phone is required</div>
+                            <div
+                                *ngIf="isValid(nv_temp, 'phone', 'minlength') || isValid(nv_temp, 'phone', 'maxlength')">
+                                Phone can not
+                                less
+                                than 10 or greater than 10</div>
+                            <div *ngIf="isValid(nv_temp, 'phone', 'pattern')">Phone must start with 0 and number only
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col"><input type="text" formControlName="id">
+                        <div *ngIf="isValid(nv_temp, 'id') " class="text-danger">
+                            <div *ngIf="isValid(nv_temp, 'id', 'required')">ID is required</div>
+                            <div *ngIf="isValid(nv_temp, 'id', 'pattern')">ID must be 9 or 12 characters</div>
+                        </div>
+                    </td>
+                    <td class="col">
+                        <input [disabled]="nv_temp.valid" type="submit" value="Lưu" />
+                        <button (click)="cancel_edit(nv_temp)">Huỷ</button>
+                    </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
